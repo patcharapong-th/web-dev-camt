@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\TaskCategory;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +14,8 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
+        $categoryIds = TaskCategory::pluck('id')->toArray();
+
         $tasks = [
             [
                 'title' => 'Complete project proposal',
@@ -72,6 +74,7 @@ class TaskSeeder extends Seeder
                 'title' => $task['title'],
                 'description' => $task['description'],
                 'completed' => $task['completed'],
+                'task_categories_id' => $categoryIds[array_rand($categoryIds)],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
