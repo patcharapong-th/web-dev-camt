@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\TaskCategory;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::with('taskCategory')->get();
 
         return view('tasks.index', [
             'tasks' => $tasks,
@@ -18,14 +19,22 @@ class TaskController extends Controller
 
     public function create()
     {
-        return view('tasks.create');
+        $taskCategories = TaskCategory::all();
+        return view('tasks.create', compact('taskCategories'));
     }
 
     public function store(Request $request)
     {
-        Task::create($request->all());
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'nullable',
+            'completed' => 'required|boolean',
+            'task_categories_id' => 'required|exists:task_categories,id',
+        ]);
 
-        return redirect()->route('tasks.index');
+        Task::create($validatedData);
+
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
     }
 
     public function destroy(Task $task)

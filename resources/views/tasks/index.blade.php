@@ -24,6 +24,7 @@
             <tr class="bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 text-white">
                 <th class="py-3 px-4 text-left">Title</th>
                 <th class="py-3 px-4 text-left">Description</th>
+                <th class="py-3 px-4 text-left">Category</th>
                 <th class="py-3 px-4 text-left">Status</th>
                 <th class="py-3 px-4 text-center">Edit</th>
                 <th class="py-3 px-4 text-center">Delete</th>
@@ -34,6 +35,7 @@
             <tr class="border-b border-blue-200 hover:bg-blue-100">
                 <td class="py-3 px-4 text-blue-700">{{ $task->title }}</td>
                 <td class="py-3 px-4 text-green-700">{{ $task->description }}</td>
+                <td class="py-3 px-4 text-purple-700">{{ $task->taskCategory->name }}</td>
                 <td class="py-3 px-4">
                     @if( $task->completed == 1)
                     <span class="bg-green-500 text-white py-1 px-2 rounded-full text-sm">Done</span>

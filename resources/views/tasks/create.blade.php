@@ -12,7 +12,7 @@
 
     <h1 class="text-4xl font-bold text-yellow-300 mb-8 text-center shadow-md">Create New Task</h1>
 
-    <form class="max-w-md mx-auto bg-white bg-opacity-80 shadow-lg rounded-lg overflow-hidden p-6">
+    <form class="max-w-md mx-auto bg-white bg-opacity-80 shadow-lg rounded-lg overflow-hidden p-6" method="POST" action="{{ route('tasks.store') }}">
         @csrf
         <div class="mb-4">
             <label for="title" class="block text-blue-700 font-bold mb-2">Task Title</label>
@@ -27,11 +27,21 @@
         </div>
 
         <div class="mb-4">
-            <label for="status" class="block text-blue-700 font-bold mb-2">Task Status</label>
-            <select id="status" name="status"
+            <label for="completed" class="block text-blue-700 font-bold mb-2">Task Status</label>
+            <select id="completed" name="completed"
                 class="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-white">
                 <option value="0">Waiting</option>
                 <option value="1">Completed</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="task_categories_id" class="block text-purple-700 font-bold mb-2">Task Category</label>
+            <select id="task_categories_id" name="task_categories_id" required
+                class="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 bg-white">
+                @foreach($taskCategories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
             </select>
         </div>
 
